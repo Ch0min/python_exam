@@ -1,15 +1,25 @@
-import bs4
+from bs4 import BeautifulSoup
 import requests
+import pandas as pd
 
-r = requests.get('https://en.wikipedia.org/wiki/2022_in_video_games')
-r.raise_for_status()
-soup = bs4.BeautifulSoup(r.text, 'html.parser')
+wiki_url = 'https://en.wikipedia.org/wiki/2022_in_video_games'
+response = requests.get(wiki_url)
+soup = BeautifulSoup(response.text, 'html.parser')
 
-print(soup.prettify())
+tables = soup.find_all('table', attrs={'class': "wikitable"})
 
-filename = './data/gamedata.html'
+for index, table in enumerate(tables):
+    # Find the closest h2 or h3 tag before the table
+    h2_or_h3_tag = table.find_previous(['h2', 'h3'])
 
-# Open the file in w mode and set encoding to UTF-8
-with open(filename, "w", encoding='utf-8') as file:
-    # Prettify the soup object and convert it into a string
-    file.write(str(soup.prettify()))
+    # Get the text content of the h2 or h3 tag, if available, or use the index
+    table_name = h2_or_h3_tag.get_text().strip(
+    ) if h2_or_h3_tag else f'table_{index + 1}'
+
+    # Remove the [edit] text from the table name
+    table_name = table_name.replace("[edit]", "").strip()
+    # Replace spaces with underscores for better file names
+    table_name = table_name.replace(" ", "_")
+
+    df = pd.read_html(str(table))[0]
+    df.to_csv(f'./data/{table_name}.csv', index=False, sep=',')
