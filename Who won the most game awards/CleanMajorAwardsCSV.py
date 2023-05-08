@@ -7,7 +7,8 @@ df = pd.read_csv('./data/Major_awards.csv')
 replacements = {
     'Christopher Judge as Kratos God of War Ragnarök': 'God of War Ragnarök',
     'Manon Gage as Marissa Marcel Immortality': 'Immortality',
-    'Laya Deleon Hayes as Angrboda God of War Ragnarök': 'God of War Ragnarök'
+    'Laya Deleon Hayes as Angrboda God of War Ragnarök': 'God of War Ragnarök',
+    'Kratos God of War Ragnarök': 'God of War Ragnarök'
 }
 df = df.replace(replacements)
 
