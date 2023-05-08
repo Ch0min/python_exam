@@ -8,3 +8,7 @@ todo:
    - User guide (how to run the program)
    - Status (What has been done (and if anything: what was not done))
    - List of Challenges you have set up for your self (The things in your project you want to highlight)
+
+
+Refactoring:
+- Remember to change wikipedia – to normal - .
