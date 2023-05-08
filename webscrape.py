@@ -23,3 +23,26 @@ for index, table in enumerate(tables):
 
     df = pd.read_html(str(table))[0]
     df.to_csv(f'./data/{table_name}.csv', index=False, sep=',')
+
+
+# get data from wikipedia page about bill gates, uncommented
+
+
+
+"""
+    import requests
+    from bs4 import BeautifulSoup
+
+    url = "https://en.wikipedia.org/wiki/2022_in_video_games"
+    response = requests.get(url)
+
+    soup = BeautifulSoup(response.content, "html.parser")
+    table = soup.find("table", {"class": "wikitable"})
+
+    rows = table.find_all("tr")
+    for row in rows:
+        cols = row.find_all("td")
+        cols = [col.text.strip() for col in cols]
+        print(cols)
+
+"""

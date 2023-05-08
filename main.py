@@ -8,3 +8,4 @@ if __name__ == '__main__':
         '-f', '--file', help='name of html file with data')
 
     args = parser.parse_args()
+# get all data from google.com / hey
