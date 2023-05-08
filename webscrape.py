@@ -16,10 +16,13 @@ for index, table in enumerate(tables):
     table_name = h2_or_h3_tag.get_text().strip(
     ) if h2_or_h3_tag else f'table_{index + 1}'
 
-    # Remove the [edit] text from the table name
+    # Remove the [edit] text from table name
     table_name = table_name.replace("[edit]", "").strip()
-    # Replace spaces with underscores for better file names
+
+    # Replace spaces with underscores
     table_name = table_name.replace(" ", "_")
+    # Replace wikipedia weird dash with normal dash
+    table_name = table_name.replace("–", "-")
 
     df = pd.read_html(str(table))[0]
     df.to_csv(f'./data/{table_name}.csv', index=False, sep=',')
