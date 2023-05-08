@@ -1,16 +1,10 @@
-# This is a sample PythonExam script.
+import argparse
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    # TODO: implement
+    parser = argparse.ArgumentParser(description='game data')
+    parser.add_argument('--url', help='url to webpage')
+    parser.add_argument(
+        '-f', '--file', help='name of html file with data')
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    args = parser.parse_args()
