@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Read the CSV file into a DataFrame, replacing '—' with NaN values
-df = pd.read_csv('./data/cleaned_file.csv', na_values=['—'])
+df = pd.read_csv('../data/cleaned_file.csv', na_values=['—'])
 
 # Calculate the frequency of each game receiving awards in different categories
 # Exclude the first two rows (header) and first two columns (category/organization)
