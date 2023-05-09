@@ -18,7 +18,6 @@ for index, table in enumerate(tables):
 
     # Remove the [edit] text from table name
     table_name = table_name.replace("[edit]", "").strip()
-
     # Replace spaces with underscores
     table_name = table_name.replace(" ", "_")
     # Replace wikipedia weird dash with normal dash
