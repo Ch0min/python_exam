@@ -1,14 +1,15 @@
 import pandas as pd
 
+try:
 # Read the CSV file into a pandas DataFrame
-df1 = pd.read_csv('../data/January-March.csv')
-df2 = pd.read_csv('../data/April-June.csv')
-df3 = pd.read_csv('../data/July-September.csv')
-df4 = pd.read_csv('../data/October-December.csv')
+    df1 = pd.read_csv('../data/January-March.csv')
+    df2 = pd.read_csv('../data/April-June.csv')
+    df3 = pd.read_csv('../data/July-September.csv')
+    df4 = pd.read_csv('../data/October-December.csv')
 
 
 # Replace multiple words in the DataFrame
-replacements = {
+    replacements = {
     'Action role-playing, first-person shooter': 'Action role-playing',
     'Action role-playing, hack and slash': 'Action role-playing',
     'Action role-playing, metroidvania': 'Action role-playing',
@@ -231,28 +232,37 @@ replacements = {
     'Various': 'Adventure',
     'Visual novel, rhythm': 'Visual novel'
 
-}
-df1 = df1.replace(replacements)
-df2 = df2.replace(replacements)
-df3 = df3.replace(replacements)
-df4 = df4.replace(replacements)
+   }
+    df1 = df1.replace(replacements)
+    df2 = df2.replace(replacements)
+    df3 = df3.replace(replacements)
+    df4 = df4.replace(replacements)
 # Write the cleaned DataFrame to a new CSV file
-df1.to_csv('../data/January-March-CLEAN.csv', index=False)
-df2.to_csv('../data/April-June-CLEAN.csv', index=False)
-df3.to_csv('../data/July-September-CLEAN.csv', index=False)
-df4.to_csv('../data/October-December-CLEAN.csv', index=False)
+    df1.to_csv('../data/January-March-CLEAN.csv', index=False)
+    df2.to_csv('../data/April-June-CLEAN.csv', index=False)
+    df3.to_csv('../data/July-September-CLEAN.csv', index=False)
+    df4.to_csv('../data/October-December-CLEAN.csv', index=False)
 
 # Read the cleaned CSV file into a new DataFrame
-cleaned_df1 = pd.read_csv('../data/January-March-CLEAN.csv')
-cleaned_df2 = pd.read_csv('../data/April-June-CLEAN.csv')
-cleaned_df3 = pd.read_csv('../data/July-September-CLEAN.csv')
-cleaned_df4 = pd.read_csv('../data/October-December-CLEAN.csv')
+    cleaned_df1 = pd.read_csv('../data/January-March-CLEAN.csv')
+    cleaned_df2 = pd.read_csv('../data/April-June-CLEAN.csv')
+    cleaned_df3 = pd.read_csv('../data/July-September-CLEAN.csv')
+    cleaned_df4 = pd.read_csv('../data/October-December-CLEAN.csv')
 
 # Perform additional edits on the cleaned DataFrame
 # ...
 
 # Write the modified DataFrame to the same CSV file
-cleaned_df1.to_csv('../data/January-March-CLEAN.csv', index=False)
-cleaned_df2.to_csv('../data/April-June-CLEAN.csv', index=False)
-cleaned_df3.to_csv('../data/July-September-CLEAN.csv', index=False)
-cleaned_df4.to_csv('../data/October-December-CLEAN.csv', index=False)
+    cleaned_df1.to_csv('../data/January-March-CLEAN.csv', index=False)
+    cleaned_df2.to_csv('../data/April-June-CLEAN.csv', index=False)
+    cleaned_df3.to_csv('../data/July-September-CLEAN.csv', index=False)
+    cleaned_df4.to_csv('../data/October-December-CLEAN.csv', index=False)
+
+except FileNotFoundError:
+    print("File not found. Please check the file paths.")
+except pd.errors.EmptyDataError:
+    print("Empty DataFrame. Please make sure the CSV files are not empty.")
+except pd.errors.ParserError:
+    print("Error parsing CSV file. Please check the file format.")
+except Exception as e:
+    print("An error occurred:", str(e))
