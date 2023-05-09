@@ -231,13 +231,6 @@ replacements = {
     'Various': 'Adventure',
     'Visual novel, rhythm': 'Visual novel'
 
-
-
-
-
-
-
-
 }
 df1 = df1.replace(replacements)
 df2 = df2.replace(replacements)
