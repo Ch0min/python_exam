@@ -3,8 +3,13 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 
 df = pd.read_csv("../data/Critically_acclaimed_games.csv")
+
+# Split the 'Platform(s)' column into separate rows
+df['Platform(s)'] = df['Platform(s)'].str.split(', ')
+df = df.explode('Platform(s)')
+
 platform_color_map = {'NS': 'red', 'PS5': 'blue',
-                      'XSX': 'darkgreen', 'Win': 'yellow', 'XBO': 'limegreen', 'PS5, XSX': 'cyan', 'NS, XSX': 'brown'}
+                      'XSX': 'darkgreen', 'XBO': 'limegreen', 'Win': 'yellow'}
 colors = df['Platform(s)'].map(platform_color_map).tolist()
 
 axes = df.plot(x='Title', y='Average score',
