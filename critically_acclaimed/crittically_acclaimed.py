@@ -8,6 +8,7 @@ df = pd.read_csv("../data/Critically_acclaimed_games.csv")
 df['Platform(s)'] = df['Platform(s)'].str.split(', ')
 df = df.explode('Platform(s)')
 
+# Different colors for each platform
 platform_color_map = {'NS': 'red', 'PS5': 'blue',
                       'XSX': 'darkgreen', 'XBO': 'limegreen', 'Win': 'yellow'}
 colors = df['Platform(s)'].map(platform_color_map).tolist()
