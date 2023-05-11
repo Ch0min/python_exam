@@ -33,7 +33,7 @@ else:
         print("#       #      #    #    # #    # #   ##     #       #   #   #       #  #     #")
         print("#       #      #    #    # ###### #    #     ###### #     # #         # #     #")
         print("                     PYTHON EXAM 2023 - GAMES IN 2022                          ")
-        print("Please select a QUESTION or use the -m or --menu OPTION to display the MENU.   ")
+        print("Please select a QUESTION (./cli_program.py (1-9)) or use the -m or --menu OPTION to display the MENU.   ")
     else:
         # Run the selected script
         if args.script == 1:
