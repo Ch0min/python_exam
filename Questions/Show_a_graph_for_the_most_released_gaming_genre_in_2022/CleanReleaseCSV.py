@@ -2,10 +2,10 @@ import pandas as pd
 
 try:
     # Read the CSV file into a pandas DataFrame
-    df1 = pd.read_csv('../data/January-March.csv')
-    df2 = pd.read_csv('../data/April-June.csv')
-    df3 = pd.read_csv('../data/July-September.csv')
-    df4 = pd.read_csv('../data/October-December.csv')
+    df1 = pd.read_csv('../../data/January-March.csv')
+    df2 = pd.read_csv('../../data/April-June.csv')
+    df3 = pd.read_csv('../../data/July-September.csv')
+    df4 = pd.read_csv('../../data/October-December.csv')
 
     # Replace multiple words in the DataFrame
     replacements = {
@@ -243,10 +243,10 @@ try:
     df4.to_csv('../data/October-December-CLEAN.csv', index=False)
 
     # Read the cleaned CSV file into a new DataFrame
-    cleaned_df1 = pd.read_csv('../data/January-March-CLEAN.csv')
-    cleaned_df2 = pd.read_csv('../data/April-June-CLEAN.csv')
-    cleaned_df3 = pd.read_csv('../data/July-September-CLEAN.csv')
-    cleaned_df4 = pd.read_csv('../data/October-December-CLEAN.csv')
+    cleaned_df1 = pd.read_csv('../../data/January-March-CLEAN.csv')
+    cleaned_df2 = pd.read_csv('../../data/April-June-CLEAN.csv')
+    cleaned_df3 = pd.read_csv('../../data/July-September-CLEAN.csv')
+    cleaned_df4 = pd.read_csv('../../data/October-December-CLEAN.csv')
 
     # Perform additional edits on the cleaned DataFrame
     # ...
