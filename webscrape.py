@@ -27,11 +27,6 @@ for index, table in enumerate(tables):
     df = pd.read_html(str(table))[0]
     df.to_csv(f'./data/{table_name}.csv', index=False, sep=',')
 
-
-# get data from wikipedia page about bill gates, uncommented
-
-
-
 """
     import requests
     from bs4 import BeautifulSoup
