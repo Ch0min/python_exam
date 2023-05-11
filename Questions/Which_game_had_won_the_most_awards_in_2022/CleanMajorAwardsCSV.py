@@ -2,7 +2,7 @@ import pandas as pd
 
 try:
     # Read the CSV file into a pandas DataFrame
-    df = pd.read_csv('../data/Major_awards.csv')
+    df = pd.read_csv('../../data/Major_awards.csv')
 
     # Replace multiple words in the DataFrame
     replacements = {
@@ -17,7 +17,7 @@ try:
     df.to_csv('../data/cleaned_file.csv', index=False)
 
     # Read the cleaned CSV file into a new DataFrame
-    cleaned_df = pd.read_csv('../data/cleaned_file.csv')
+    cleaned_df = pd.read_csv('../../data/cleaned_file.csv')
 
     # Perform additional edits on the cleaned DataFrame
     # ...

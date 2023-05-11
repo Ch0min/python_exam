@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import argparse
 import os
 
@@ -12,8 +14,8 @@ args = parser.parse_args()
 
 if args.menu:
     print("1 - Which month had the most and least released games in 2022?")
-    print("2 - Which Game Development Company had released the most games in 2022?")
-    print("3 - Which gaming platform was the most popular in 2022?")
+    print("2 - Which Game Dev Publisher had released the most games in 2022?")
+    print("3 - Which gaming platform has had the most games released in 2022?")
     print("4 - Which game had won the most awards in 2022?")
     print("5 - Which genre was the most popular among the released games in 2022?")
     print("6 - Show a graph for the most released gaming genre in 2022.")
@@ -35,21 +37,24 @@ else:
     else:
         # Run the selected script
         if args.script == 1:
-            os.system('python3 ../Which_Month_had_the_most_released_games_in_2022_and_vice_versa?/month_released_most.py')
-            os.system('python3 ../Which_Month_had_the_most_released_games_in_2022_and_vice_versa?/month_released_less.py')
+            os.system("python3 ../Questions/Which_month_had_the_most_and_least_released_games_in_2022/month_released_most.py")
+            print("\t")
+            os.system("python3 ../Questions/Which_month_had_the_most_and_least_released_games_in_2022/month_released_less.py")
         elif args.script == 2:
-            os.system('python3 helloworld.py')
+            os.system("python3 ../Questions/Which_Game_Dev_Publisher_had_released_the_most_games_in_2022/most_game_releases_2022_by_company.py")
         elif args.script == 3:
-            os.system('python3 calculate.py')
+            os.system("python3 ../Questions/Which_platform_has_had_the_most_games_released_in_2022/most_releases_by_platform.py")
         elif args.script == 4:
-            os.system('python3 helloworld.py')
+            os.system("python3 ../Questions/Which_game_had_won_the_most_awards_in_2022/MostAwardsByCategory.py")
+            print("\t")
+            os.system("python3 ../Questions/Which_game_had_won_the_most_awards_in_2022/MostAwardsInTotal.py")
         elif args.script == 5:
-            os.system('python3 calculate.py')
+            os.system("python3 missing")
         elif args.script == 6:
-            os.system('python3 helloworld.py')
+            os.system("python3 ../Questions/Show_a_graph_for_the_most_released_gaming_genre_in_2022/PopularGenreGraph.py")
         elif args.script == 7:
-            os.system('python3 calculate.py')
+            os.system("python3 ../Questions/Show_a_graph_for_the_Critically_Acclaimed_Games_with_the_best_rating/critically_acclaimed.py")
         elif args.script == 8:
-            os.system('python3 helloworld.py')
+            os.system("python3 helloworld.py")
         elif args.script == 9:
-            os.system('python3 calculate.py')
+            os.system("python3 calculate.py")
