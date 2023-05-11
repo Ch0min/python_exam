@@ -1,3 +1,16 @@
+import pandas as pd
+import glob
+import os
+
+# Define the path to the CSV files
+path = r'data'
+
+# Identify all CSV files with the specific pattern
+all_files = glob.glob(os.path.join(path, "*CLEAN.csv"))
+
+# Merge all CSV files into one DataFrame
+df = pd.concat((pd.read_csv(f) for f in all_files), ignore_index=True)
+print(df)
 # The genre with the most releases:
 # import pandas as pd
 # data = pd.read_csv('./data/January-March.csv')
@@ -18,7 +31,6 @@
 # most_mentioned_title = title_count.index[0]
 #
 # print("The title that is mentioned the most is:", most_mentioned_title)
-
 
 
 # Which csv file out of January-March.csv, April-June.csv, July-September.csv, October-December.csv has the most titles:
@@ -56,8 +68,3 @@
 # max_month = month_counts['Title'].idxmax()
 #
 # print(max_month)
-
-
-
-
-
