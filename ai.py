@@ -1,10 +1,11 @@
 import pandas as pd
 import glob
 import os
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.compose import make_column_transformer
+import numpy as np
 from sklearn.model_selection import train_test_split
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.preprocessing import LabelEncoder
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 
 # Define the path to the CSV files
 path = r'data'
@@ -14,40 +15,20 @@ all_files = glob.glob(os.path.join(path, "*CLEAN.csv"))
 
 # Merge all CSV files into one DataFrame
 df = pd.concat((pd.read_csv(f) for f in all_files), ignore_index=True)
-print(df)
 
-# One-hot encode categorical features
-columns_to_encode = ['Month', 'Day', 'Title',
-                     'Platform(s)', 'Genre(s)', 'Developer(s)', 'Publisher(s)', 'Ref.']
-column_transformer = make_column_transformer(
-    (OneHotEncoder(), columns_to_encode),
-    remainder='passthrough'
-)
-encoded_df = column_transformer.fit_transform(df)
+# Remove 'Ref.' column from the DataFrame
+df.drop('Ref.', axis=1, inplace=True)
 
-# Split the dataset into training and testing sets
-X = encoded_df.drop('Ref.', axis=1)
-y = encoded_df['Ref.']
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.3, random_state=42)
+# Read the game awards CSV file
+game_awards = pd.read_csv('./data/cleaned_file.csv', na_values=['—'])
 
-# Apply the k-nearest neighbors algorithm
-knn = KNeighborsClassifier(n_neighbors=3)
-knn.fit(X_train, y_train)
+game_awards = game_awards.iloc[2:, 2:].apply(pd.Series.value_counts).fillna(0)
 
-# Predict the quality of new games
-new_game_data = pd.DataFrame({
-    'Month': [1, 1],
-    'Day': [1, 1],
-    'Title': ['New Game 1', 'New Game 2'],
-    'Platform(s)': ['PS4, PS5', 'PC'],
-    'Genre(s)': ['Action role-playing', 'Simulation'],
-    'Developer(s)': ['Developer 1', 'Developer 2'],
-    'Publisher(s)': ['Publisher 1', 'Publisher 2'],
-    'Ref.': [0, 0]
-})
+# Sum up the awards across different categories for each game
+# and combine them with the game release data
+total_awards = game_awards.sum(axis=1)
+df_other = total_awards.reset_index()
+df_other.columns = ['Title', 'Awards']
 
-encoded_new_game_data = column_transformer.transform(new_game_data)
-predicted_quality = knn.predict(encoded_new_game_data)
-
-print(predicted_quality)
+# dataframe with games and the amount of awards
+df_with_awards = pd.merge(df, df_other, on='Title', how='left').fillna(0)
