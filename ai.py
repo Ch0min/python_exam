@@ -47,8 +47,8 @@ onehot_encoder = OneHotEncoder()
 onehot_encoded = onehot_encoder.fit_transform(game_data[categorical_columns])
 
 # Create a DataFrame from the one-hot encoded categorical features
-onehot_encoded_df = pd.DataFrame(onehot_encoded.toarray(
-), columns=onehot_encoder.get_feature_names_out(categorical_columns))
+onehot_encoded_df = pd.DataFrame(onehot_encoded.toarray(),
+                                 columns=onehot_encoder.get_feature_names_out(categorical_columns))
 
 # Drop the original categorical columns from the game_data DataFrame
 game_data.drop(columns=categorical_columns, inplace=True)
@@ -98,21 +98,30 @@ print("Mean Absolute Error:", mae)
 print("R-squared:", r2)
 
 # Predict the success of a new game
-# Replace this with the actual feature values
-# Get the number of columns in X after one-hot encoding
-num_encoded_cols = X.shape[1]
+# Create a DataFrame with the new game's features
+new_game_data = pd.DataFrame({
+    'Month': [2],
+    'Day': [25],
+    'Platform(s)': ['Win, PS4, PS5, XBO, XSX'],
+    'Genre(s)': ['Action-Role-playing'],
+    'Developer(s)': ['FromSoftware'],
+    'Publisher(s)': ['Bandai Namco Entertainment']
+})
 
-# Replace this with the actual feature values, with the same number of columns as X after one-hot encoding
-new_game_features = np.array(
-    [[5, 15, 1, 3, 0, 1] + [0] * (num_encoded_cols - 6)])
+# Create a DataFrame with the same columns as the one-hot encoded training data and fill it with zeros
+new_game_encoded_df = pd.DataFrame(np.zeros((1, len(onehot_encoder.get_feature_names_out(categorical_columns))),
+                                            dtype=int),
+                                   columns=onehot_encoder.get_feature_names_out(categorical_columns))
 
-# Create a DataFrame from the new_game_features array
-new_game_features_df = pd.DataFrame(new_game_features, columns=feature_names)
+# Update this DataFrame with the new game data
+for col in categorical_columns:
+    column_name = f"{col}_{new_game_data[col].iloc[0]}"
+    if column_name in new_game_encoded_df.columns:
+        new_game_encoded_df[column_name] = 1
 
-# Scale the features of the new game
-new_game_features_scaled = scaler.transform(new_game_features_df)
+# Scale the new game data
+new_game_scaled = scaler.transform(new_game_encoded_df)
 
 # Predict the success of the new game
-predicted_success = knn.predict(new_game_features_scaled)
-
-print("Predicted Success:", predicted_success)
+new_game_pred = knn.predict(new_game_scaled)
+print("Predicted awards for the new game:", new_game_pred[0])
