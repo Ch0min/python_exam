@@ -18,7 +18,8 @@ menu_options = {
     2: {
         "name": "Which Game Dev Publisher had released the most games in 2022?",
         "scripts": [
-            "../Questions/Which_Game_Dev_Publisher_had_released_the_most_games_in_2022/most_game_releases_2022_by_company.py"
+            "../Questions/Which_Game_Dev_Publisher_had_released_the_most_games_in_2022/most_game_releases_2022_by_company.py",
+            "../Questions/Which_Game_Dev_Publisher_had_released_the_most_games_in_2022/predict_games_released_next_month.py"
         ]
     },
     3: {
@@ -35,8 +36,8 @@ menu_options = {
         ]
     },
     5: {
-        "name": "Which genre was the most popular among the released games in 2022?",
-        "scripts": ["missing"]
+        "name": "Which game will we recommend based on genre and platform (possibly rating too)?",
+        "scripts": ["calculate.py"]
     },
     6: {
         "name": "Show a graph for the most released gaming genre in 2022.",
@@ -53,10 +54,6 @@ menu_options = {
     8: {
         "name": "Is there a connection between genre and platform?",
         "scripts": ["helloworld.py"]
-    },
-    9: {
-        "name": "Which game will we recommend based on genre and platform (possibly rating too)?",
-        "scripts": ["calculate.py"]
     }
 }
 
