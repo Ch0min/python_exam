@@ -3,7 +3,7 @@ import glob
 import os
 import numpy as np
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import OneHotEncoder
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 
@@ -26,31 +26,35 @@ game_awards = game_awards.iloc[2:, 2:].apply(pd.Series.value_counts).fillna(0)
 
 # Sum up the awards across different categories for each game
 # and combine them with the game release data
-
-# maybe not need astype()
-total_awards = game_awards.astype('int64').sum(axis=1)
+total_awards = game_awards.sum(axis=1)
 df_other = total_awards.reset_index()
 df_other.columns = ['Title', 'Awards']
 
 # dataframe with games and the amount of awards
 df_with_awards = pd.merge(df, df_other, on='Title', how='left').fillna(0)
-print(df_with_awards)
 
 game_data = df_with_awards
-# game_data['Day'] = game_data['Day'].astype(int)
-# game_data['Awards'] = game_data['Awards'].astype(int)
-
-# drop the bottom row as it only contains 0
 game_data.drop(index=df.index[-1], axis=0, inplace=True)
-# game_data = game_data['Awards'].astype(int)
-print(game_data)
 
 # Preprocess the data
-label_encoder = LabelEncoder()
 categorical_columns = ['Month', 'Day',
                        'Platform(s)', 'Genre(s)', 'Developer(s)', 'Publisher(s)']
-game_data[categorical_columns] = game_data[categorical_columns].apply(
-    lambda col: label_encoder.fit_transform(col))
+
+# Instantiate the OneHotEncoder
+onehot_encoder = OneHotEncoder()
+
+# Fit and transform the categorical columns
+onehot_encoded = onehot_encoder.fit_transform(game_data[categorical_columns])
+
+# Create a DataFrame from the one-hot encoded categorical features
+onehot_encoded_df = pd.DataFrame(onehot_encoded.toarray(
+), columns=onehot_encoder.get_feature_names_out(categorical_columns))
+
+# Drop the original categorical columns from the game_data DataFrame
+game_data.drop(columns=categorical_columns, inplace=True)
+
+# Concatenate the one-hot encoded columns to the game_data DataFrame
+game_data = pd.concat([game_data, onehot_encoded_df], axis=1)
 
 # Split the data into features (X) and target (y)
 X = game_data.drop(columns=['Title', 'Awards'])
@@ -82,7 +86,17 @@ print("R-squared:", r2)
 
 # Predict the success of a new game
 # Replace this with the actual feature values
-new_game_features = np.array([[5, 15, 1, 3, 0, 1]])
+# Get the number of columns in X after one-hot encoding
+num_encoded_cols = X.shape[1]
+
+# Replace this with the actual feature values, with the same number of columns as X after one-hot encoding
+new_game_features = np.array(
+    [[5, 15, 1, 3, 0, 1] + [0] * (num_encoded_cols - 6)])
+
+# Create a DataFrame from the new_game_features array
 new_game_features_df = pd.DataFrame(new_game_features, columns=feature_names)
+
+# Predict the success of the new game
 predicted_success = knn.predict(new_game_features_df)
+
 print("Predicted Success:", predicted_success)
