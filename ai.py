@@ -2,8 +2,8 @@ import pandas as pd
 import glob
 import os
 import numpy as np
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import OneHotEncoder
+from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 
@@ -26,7 +26,7 @@ game_awards = game_awards.iloc[2:, 2:].apply(pd.Series.value_counts).fillna(0)
 
 # Sum up the awards across different categories for each game
 # and combine them with the game release data
-total_awards = game_awards.sum(axis=1)
+total_awards = game_awards.astype('int64').sum(axis=1)
 df_other = total_awards.reset_index()
 df_other.columns = ['Title', 'Awards']
 
@@ -67,13 +67,26 @@ feature_names = X.columns
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42)
 
-# Train the kNN model
-k = 5  # Choose an appropriate value for k
-knn = KNeighborsRegressor(n_neighbors=k)
-knn.fit(X_train, y_train)
+# Scale the features
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+# Use GridSearchCV to find the optimal value of k
+k_values = range(1, 50)
+param_grid = {'n_neighbors': k_values}
+grid_search = GridSearchCV(KNeighborsRegressor(), param_grid, cv=5)
+grid_search.fit(X_train_scaled, y_train)
+
+# Get the best value of k
+best_k = grid_search.best_params_['n_neighbors']
+
+# Train the kNN model with the best value of k
+knn = KNeighborsRegressor(n_neighbors=best_k)
+knn.fit(X_train_scaled, y_train)
 
 # Predictions on the test set
-y_pred = knn.predict(X_test)
+y_pred = knn.predict(X_test_scaled)
 
 # Calculate evaluation metrics
 mse = mean_squared_error(y_test, y_pred)
@@ -96,7 +109,10 @@ new_game_features = np.array(
 # Create a DataFrame from the new_game_features array
 new_game_features_df = pd.DataFrame(new_game_features, columns=feature_names)
 
+# Scale the features of the new game
+new_game_features_scaled = scaler.transform(new_game_features_df)
+
 # Predict the success of the new game
-predicted_success = knn.predict(new_game_features_df)
+predicted_success = knn.predict(new_game_features_scaled)
 
 print("Predicted Success:", predicted_success)
