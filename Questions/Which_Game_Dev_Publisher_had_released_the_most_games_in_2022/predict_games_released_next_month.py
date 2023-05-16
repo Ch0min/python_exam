@@ -5,7 +5,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import make_pipeline
 from sklearn.model_selection import cross_val_score
 
-with open('../data/January-March.csv', 'r') as f:
+with open('../../data/January-March.csv', 'r') as f:
     reader = csv.reader(f)
     data = [row for row in reader]
 
