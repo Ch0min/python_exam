@@ -2,6 +2,8 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.impute import SimpleImputer
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
 
 df_jan_mar = pd.read_csv('../../data/January-March-CLEAN.csv')
 df_apr_jun = pd.read_csv('../../data/April-June-CLEAN.csv')
@@ -16,6 +18,9 @@ df = pd.concat([df_jan_mar[['Platform(s)', 'Genre(s)']],
 
 # Handle missing values in the genre column
 df['Genre(s)'].fillna('Unknown', inplace=True)
+
+df['Platform(s)'] = df['Platform(s)'].str.split(', ')
+df = df.explode('Platform(s)')
 
 # Split the data into features (genre) and target variable (platform)
 X = df['Genre(s)']
@@ -36,9 +41,6 @@ X_train, X_test, y_train, y_test = train_test_split(X_train, y_train, test_size=
 vectorizer = CountVectorizer()
 X_train = vectorizer.fit_transform(X_train.flatten())
 X_test = vectorizer.transform(X_test.flatten())
-
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score
 
 # Train a logistic regression model
 model = LogisticRegression()
