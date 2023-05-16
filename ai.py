@@ -26,6 +26,7 @@ game_awards = game_awards.iloc[2:, 2:].apply(pd.Series.value_counts).fillna(0)
 
 # Sum up the awards across different categories for each game
 # and combine them with the game release data
+
 # maybe not need astype()
 total_awards = game_awards.astype('int64').sum(axis=1)
 df_other = total_awards.reset_index()
@@ -48,14 +49,15 @@ print(game_data)
 label_encoder = LabelEncoder()
 categorical_columns = ['Month', 'Day',
                        'Platform(s)', 'Genre(s)', 'Developer(s)', 'Publisher(s)']
-# categorical_columns = [
-#     'Month', 'Platform(s)', 'Genre(s)', 'Developer(s)', 'Publisher(s)']
 game_data[categorical_columns] = game_data[categorical_columns].apply(
     lambda col: label_encoder.fit_transform(col))
 
 # Split the data into features (X) and target (y)
 X = game_data.drop(columns=['Title', 'Awards'])
 y = game_data['Awards']
+
+# Store feature names
+feature_names = X.columns
 
 # Split the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(
@@ -81,5 +83,6 @@ print("R-squared:", r2)
 # Predict the success of a new game
 # Replace this with the actual feature values
 new_game_features = np.array([[5, 15, 1, 3, 0, 1]])
-predicted_success = knn.predict(new_game_features)
+new_game_features_df = pd.DataFrame(new_game_features, columns=feature_names)
+predicted_success = knn.predict(new_game_features_df)
 print("Predicted Success:", predicted_success)
