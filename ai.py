@@ -7,50 +7,39 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 
-# Define the path to the CSV files
-path = r'data'
-
-# Identify all CSV files with the specific pattern
+# Combine all CSV files into one DataFrame
+path = "data/"
+# path = r'data'
 all_files = glob.glob(os.path.join(path, "*CLEAN.csv"))
-
-# Merge all CSV files into one DataFrame
 df = pd.concat((pd.read_csv(f) for f in all_files), ignore_index=True)
 
-# Remove 'Ref.' column from the DataFrame
+# Remove Ref column
 df.drop('Ref.', axis=1, inplace=True)
 
-# Read the game awards CSV file
+# Sum up the awards across different categories for each game
 game_awards = pd.read_csv('./data/cleaned_file.csv', na_values=['—'])
-
 game_awards = game_awards.iloc[2:, 2:].apply(pd.Series.value_counts).fillna(0)
 
-# Sum up the awards across different categories for each game
-# and combine them with the game release data
+# Combine awards with the game release data
 total_awards = game_awards.astype('int64').sum(axis=1)
 df_other = total_awards.reset_index()
 df_other.columns = ['Title', 'Awards']
 
-# dataframe with games and the amount of awards
-df_with_awards = pd.merge(df, df_other, on='Title', how='left').fillna(0)
-
-game_data = df_with_awards
+game_data = pd.merge(df, df_other, on='Title', how='left').fillna(0)
 game_data.drop(index=df.index[-1], axis=0, inplace=True)
 
-# Preprocess the data
+# onehot encode
 categorical_columns = ['Month', 'Day',
                        'Platform(s)', 'Genre(s)', 'Developer(s)', 'Publisher(s)']
 
-# Instantiate the OneHotEncoder
 onehot_encoder = OneHotEncoder()
 
-# Fit and transform the categorical columns
 onehot_encoded = onehot_encoder.fit_transform(game_data[categorical_columns])
 
-# Create a DataFrame from the one-hot encoded categorical features
 onehot_encoded_df = pd.DataFrame(onehot_encoded.toarray(),
                                  columns=onehot_encoder.get_feature_names_out(categorical_columns))
 
-# Drop the original categorical columns from the game_data DataFrame
+# Drop the original columns from the game_data DataFrame
 game_data.drop(columns=categorical_columns, inplace=True)
 
 # Concatenate the one-hot encoded columns to the game_data DataFrame
@@ -67,7 +56,7 @@ feature_names = X.columns
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42)
 
-# Scale the features
+# Scale the features to standardize
 scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
@@ -78,10 +67,8 @@ param_grid = {'n_neighbors': k_values}
 grid_search = GridSearchCV(KNeighborsRegressor(), param_grid, cv=5)
 grid_search.fit(X_train_scaled, y_train)
 
-# Get the best value of k
+# Get the best value of k and use it to train
 best_k = grid_search.best_params_['n_neighbors']
-
-# Train the kNN model with the best value of k
 knn = KNeighborsRegressor(n_neighbors=best_k)
 knn.fit(X_train_scaled, y_train)
 
