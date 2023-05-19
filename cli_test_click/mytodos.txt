@@ -1,2 +1,0 @@
-Hello: Hello World [PRIORITY: Medium]
-Hello2: Hello World 2 [PRIORITY: Medium]
