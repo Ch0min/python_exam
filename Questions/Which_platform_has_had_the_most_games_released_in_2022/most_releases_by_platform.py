@@ -3,7 +3,7 @@ import csv
 def get_most_releases_by_platform():
     platform_counts = {}
 
-    for filename in ["../data/January-March.csv", "../data/July-September.csv", "../data/October-December.csv"]:
+    for filename in ["../../data/January-March.csv", "../../data/July-September.csv", "../../data/October-December.csv"]:
         with open(filename) as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
@@ -19,3 +19,4 @@ def get_most_releases_by_platform():
     return [most_releases, count]
 
 
+print(get_most_releases_by_platform())
