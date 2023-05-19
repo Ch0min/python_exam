@@ -36,24 +36,22 @@ menu_options = {
         ]
     },
     5: {
-        "name": "Which game will we recommend based on genre and platform (possibly rating too)?",
-        "scripts": ["calculate.py"]
-    },
-    6: {
         "name": "Show a graph for the most released gaming genre in 2022.",
         "scripts": [
             "../Questions/Show_a_graph_for_the_most_released_gaming_genre_in_2022/PopularGenreGraph.py"
         ]
     },
-    7: {
+    6: {
         "name": "Show a graph for the Critically Acclaimed Games with the best rating.",
         "scripts": [
             "../Questions/Show_a_graph_for_the_Critically_Acclaimed_Games_with_the_best_rating/critically_acclaimed.py"
         ]
     },
-    8: {
+    7: {
         "name": "Is there a connection between genre and platform?",
-        "scripts": ["helloworld.py"]
+        "scripts": [
+            "../Questions/Connection_Between_Genre_And_Platform/Connection.py"
+        ]
     }
 }
 
