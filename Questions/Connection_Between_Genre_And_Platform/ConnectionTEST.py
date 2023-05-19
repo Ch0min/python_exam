@@ -2,10 +2,10 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-df_jan_mar = pd.read_csv('../../data/January-March-CLEAN.csv')
-df_apr_jun = pd.read_csv('../../data/April-June-CLEAN.csv')
-df_jul_sep = pd.read_csv('../../data/July-September-CLEAN.csv')
-df_oct_dec = pd.read_csv('../../data/October-December-CLEAN.csv')
+df_jan_mar = pd.read_csv('../data/January-March-CLEAN.csv')
+df_apr_jun = pd.read_csv('../data/April-June-CLEAN.csv')
+df_jul_sep = pd.read_csv('../data/July-September-CLEAN.csv')
+df_oct_dec = pd.read_csv('../data/October-December-CLEAN.csv')
 
 # Concat all dataframes into one and extract the "Month" and "Title" columns:
 df = pd.concat([df_jan_mar[['Platform(s)', 'Genre(s)']],

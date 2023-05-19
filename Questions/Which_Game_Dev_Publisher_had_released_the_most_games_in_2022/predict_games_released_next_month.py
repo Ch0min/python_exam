@@ -6,7 +6,7 @@ from sklearn.pipeline import make_pipeline
 from sklearn.model_selection import cross_val_score
 import matplotlib.pyplot as plt
 
-with open('../../data/January-March.csv', 'r') as f:
+with open('../data/January-March.csv', 'r') as f:
     reader = csv.reader(f)
     data = [row for row in reader]
 
