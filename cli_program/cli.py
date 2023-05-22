@@ -51,6 +51,12 @@ menu_options = {
         "scripts": [
             "../Questions/Connection_Between_Genre_And_Platform/Connection.py"
         ]
+    },
+    8: {
+        "name": "Predict Game of the Year 2024",
+        "scripts": [
+            "../ai.py"
+        ]
     }
 }
 
