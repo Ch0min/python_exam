@@ -3,14 +3,16 @@ Python Exam
 
 Todo:
    - Short description
+     Vi har lavet et project, hvor vi har webscrapet spildata fra 2022 fra wikipedia.
+     Den data som vi har scrapet, har vi cleanet, bearbejdet og visualiseret samt udviklet simple machine learning algoritmer.
    - List of used technologies.
      - Beautiful Soup 
-     - matplotlib 
-     - pandas 
-     - sklearn - scikit 
-     - subprocess 
-     - numpy
-     - csv
+     - Matplotlib 
+     - Pandas 
+     - Sklearn - scikit 
+     - Subprocess 
+     - Numpy
+     - CSV
 
    - Installation guide (if any libraries need to be installed)
    - User guide (how to run the program)
