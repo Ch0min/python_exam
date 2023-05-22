@@ -2,11 +2,10 @@
 
 import argparse
 import subprocess
-# The subprocess library in Python allows you to spawn and manage subprocesses,
-# interact with their input/output, and handle errors, providing powerful capabilities
-# for executing external commands and automating tasks.
+# Subprocess kort sagt er et library i Python, som hjælper med, at oprette subprocesser.
+# Vi har brugt det, da det er up-to-date og er stærkere end os.system.
 
-# Define the CLI menu options
+# Dictionary for CLI menu spørgsmål.
 menu_options = {
     1: {
         "name": "Which month had the most and least released games in 2022?",
@@ -55,13 +54,13 @@ menu_options = {
     }
 }
 
-# Define the CLI menu options
+# Definer CLI argumenter.
 parser = argparse.ArgumentParser(description="Select a QUESTION:")
 parser.add_argument("script", type=int, nargs="?", choices=list(menu_options.keys()), default=None,
                     help=f"Select a QUESTION between {menu_options.keys()} or use the -m or --menu to show the QUESTIONS.")
 parser.add_argument("-m", "--menu", action="store_true", help="display the CLI MENU options")
 
-# Parse the command-line arguments
+# Parse CLI argumenter.
 args = parser.parse_args()
 
 if args.menu:
@@ -79,7 +78,7 @@ else:
         print(
             "Please select a QUESTION (./cli_program.py (1-9)) or use the -m or --menu OPTION to display the MENU.   ")
     else:
-        # Run the selected script
+        # Kør det valgte script/scripts.
         if args.script in menu_options:
             scripts = menu_options[args.script]["scripts"]
             for script in scripts:

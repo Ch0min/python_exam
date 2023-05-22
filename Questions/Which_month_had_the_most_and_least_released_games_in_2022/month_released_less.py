@@ -1,22 +1,19 @@
-# Which Month had the least released games in 2022?
-
 import pandas as pd
 
-# Load each csv file into a pandas DataFrame:
+# Load hver csv file til et Pandas DataFrame:
 df_jan_mar = pd.read_csv('../data/January-March.csv')
 df_apr_jun = pd.read_csv('../data/April-June.csv')
 df_jul_sep = pd.read_csv('../data/July-September.csv')
 df_oct_dec = pd.read_csv('../data/October-December.csv')
 
-# Get the number of titles in each DataFrame using the shape attribute and selecting the number of rows:
-# Ex: rdf_jan_mar.shape[0] returns the number of rows in the dataframe df_jan_mar,
-#   which is equivalent to the number of titles in the January-March period.
+
+# Tager fat i titles i hver DataFrame, samt bruger vi shape attributten til, at vælge rows.
 num_titles_jan_mar = df_jan_mar.shape[0]
 num_titles_apr_jun = df_apr_jun.shape[0]
 num_titles_jul_sep = df_jul_sep.shape[0]
 num_titles_oct_dec = df_oct_dec.shape[0]
 
-# Create a dictionary with the number of titles for each DataFrame:
+# Opretter vi et Dictionary med antallet af titles/games for hver DataFrame.
 title_counts = {
     'January-March.csv': num_titles_jan_mar,
     'April-June.csv': num_titles_apr_jun,
@@ -24,23 +21,23 @@ title_counts = {
     'October-December.csv': num_titles_oct_dec
 }
 
-# min(title_counts, key=lambda k: title_counts[k]) returns the key (i.e., the CSV filename)
-#   with the minimum value (i.e., the file with the least titles).
-#   This key is then assigned to the variable min_file.
+# Tager fat i title_counts Dict og returnere the key (CSV filnavn) med den mindste value.
+# key=lambda k: title_counts[k] tager fat i alle keys i title_counts Dict, og sammenligner, hvem der har mindst titler.
 min_file = min(title_counts, key=lambda k: title_counts[k])
 
 print(f"The month period with the least games is {min_file}")
 
 
-# Find the month with the least titles across all files
+# Find kun den ene måned med mindst titler.
 
-# Concat all dataframes into one and extract the "Month" and "Title" columns:
+# Concat alle DataFrames til et, og tag fat i "Month" og "Title" kolonnerne.
 all_months = pd.concat([df_jan_mar[['Month', 'Title']],
                         df_apr_jun[['Month', 'Title']],
                         df_jul_sep[['Month', 'Title']],
                         df_oct_dec[['Month', 'Title']]])
 
-# It groups the titles by month and counts the number of titles in each month:
+
+# Groups titler af "Month" og optæller antallet af titler i hver måned.
 month_counts = all_months.groupby('Month').count()
 min_month = month_counts['Title'].idxmin()
 
