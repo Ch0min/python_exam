@@ -21,7 +21,7 @@ for row in data:
         developer_counts[developer] += 1
 
 # Gør data klar til at træne model
-X = np.array([[developer_counts[developer]] for developer in developer_counts.keys()])  # Convert to a 2D array
+X = np.array([[developer_counts[developer]] for developer in developer_counts.keys()])  # konverter til 2D array
 y = np.array(list(developer_counts.values()))
 
 # Brug cross-validation til at estimere hvor god modellen er
@@ -45,7 +45,7 @@ print(f"Mean Accuracy: {mean_accuracy}")
 
 
 
-
+#får graf
 # Sorter spiludviklerne og predicted_counts så den viser antallet af spil spiludviklerne har udgivet, fra flest udgivede og ned af til færrest udgivede
 sorted_data = sorted(zip(predictions.keys(), predictions.values()), key=lambda x: x[1], reverse=True)
 
