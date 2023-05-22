@@ -32,6 +32,8 @@ try:
     categorical_columns = ['Month', 'Day',
                            'Platform(s)', 'Genre(s)', 'Developer(s)', 'Publisher(s)']
 
+    game_data[categorical_columns] = game_data[categorical_columns].astype(str)
+
     onehot_encoder = OneHotEncoder()
 
     onehot_encoded = onehot_encoder.fit_transform(
