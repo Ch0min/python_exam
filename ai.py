@@ -9,14 +9,14 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 
 try:
     # kombiner csv filer
-    path = "data/"
+    path = "../data/"
     all_files = glob.glob(os.path.join(path, "*CLEAN.csv"))
     df = pd.concat((pd.read_csv(f) for f in all_files), ignore_index=True)
 
     df.drop('Ref.', axis=1, inplace=True)
 
     # sum af awards for hvert spil
-    game_awards = pd.read_csv('./data/cleaned_file.csv', na_values=['—'])
+    game_awards = pd.read_csv('../data/cleaned_file.csv', na_values=['—'])
     game_awards = game_awards.iloc[2:, 2:].apply(
         pd.Series.value_counts).fillna(0)
 
