@@ -1,13 +1,13 @@
 import pandas as pd
 
 try:
-    # Read the CSV file into a pandas DataFrame
+    # Her læser vi de 4 csv filer som skal redigeres ved hjælp af panda
     df1 = pd.read_csv('../../data/January-March.csv')
     df2 = pd.read_csv('../../data/April-June.csv')
     df3 = pd.read_csv('../../data/July-September.csv')
     df4 = pd.read_csv('../../data/October-December.csv')
 
-    # Replace multiple words in the DataFrame
+    # Her bruger vi et dictionary til at bestemme hvilke værdier der skal erstattes i vores datasæt
     replacements = {
         'Action role-playing, first-person shooter': 'Action role-playing',
         'Action role-playing, hack and slash': 'Action role-playing',
@@ -236,26 +236,11 @@ try:
     df2 = df2.replace(replacements)
     df3 = df3.replace(replacements)
     df4 = df4.replace(replacements)
-    # Write the cleaned DataFrame to a new CSV file
+    # Her skriver vi det nye data ind i en ny CSV fil
     df1.to_csv('../data/January-March-CLEAN.csv', index=False)
     df2.to_csv('../data/April-June-CLEAN.csv', index=False)
     df3.to_csv('../data/July-September-CLEAN.csv', index=False)
     df4.to_csv('../data/October-December-CLEAN.csv', index=False)
-
-    # Read the cleaned CSV file into a new DataFrame
-    cleaned_df1 = pd.read_csv('../../data/January-March-CLEAN.csv')
-    cleaned_df2 = pd.read_csv('../../data/April-June-CLEAN.csv')
-    cleaned_df3 = pd.read_csv('../../data/July-September-CLEAN.csv')
-    cleaned_df4 = pd.read_csv('../../data/October-December-CLEAN.csv')
-
-    # Perform additional edits on the cleaned DataFrame
-    # ...
-
-    # Write the modified DataFrame to the same CSV file
-    cleaned_df1.to_csv('../data/January-March-CLEAN.csv', index=False)
-    cleaned_df2.to_csv('../data/April-June-CLEAN.csv', index=False)
-    cleaned_df3.to_csv('../data/July-September-CLEAN.csv', index=False)
-    cleaned_df4.to_csv('../data/October-December-CLEAN.csv', index=False)
 
 except FileNotFoundError:
     print("File not found. Please check the file paths.")
