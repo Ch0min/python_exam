@@ -9,19 +9,19 @@ soup = BeautifulSoup(response.text, 'html.parser')
 tables = soup.find_all('table', attrs={'class': "wikitable"})
 
 for index, table in enumerate(tables):
-    # Find the closest h2 or h3 tag before the table
+    # Vi finder h2 eller h3 tags før tabellerne, så vi har overskrifterne.
     h2_or_h3_tag = table.find_previous(['h2', 'h3'])
 
-    # Get the text content of the h2 or h3 tag, if available, or use the index
+    # Vi bruger h2 eler h3 som navn på filen, og tilføjer et index, hvis der ikke er nogen overskrift.
     table_name = h2_or_h3_tag.get_text().strip(
     ) if h2_or_h3_tag else f'table_{index + 1}'
 
-    # Remove the [edit] text from table name
+    # Vi fjerner [edit] teksten fra wikipedia.
     table_name = table_name.replace("[edit]", "").strip()
 
-    # Replace spaces with underscores
+    # Her erstatter vi mellemrum med underscore.
     table_name = table_name.replace(" ", "_")
-    # Replace wikipedia weird dash with normal dash
+    # Vi erstatter wikipedias dash med et normal dash.
     table_name = table_name.replace("–", "-")
 
     df = pd.read_html(str(table))[0]
