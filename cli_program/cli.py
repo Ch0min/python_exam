@@ -82,7 +82,7 @@ else:
         print("#       #      #    #    # ###### #    #     ###### #     # #         # #     #")
         print("                     PYTHON EXAM 2023 - GAMES IN 2022                          ")
         print(
-            "Please select a QUESTION (./cli_program.py (1-9)) or use the -m or --menu OPTION to display the MENU.   ")
+            "Please select a QUESTION (./cli_program.py (1-8)) or use the -m or --menu OPTION to display the MENU.   ")
     else:
         # Kør det valgte script/scripts.
         if args.script in menu_options:

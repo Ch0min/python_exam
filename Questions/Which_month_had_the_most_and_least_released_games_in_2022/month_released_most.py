@@ -43,15 +43,3 @@ print(f"The month with the most games released is {max_month}")
 
 
 
-# jan: 57
-# feb: 74
-# mar: 72
-# apr: 65
-# maj: 84
-# jun: 128
-# jul: 117
-# aug: 100
-# sep: 120
-# okt: 82
-# nov: 81
-# dec: 56

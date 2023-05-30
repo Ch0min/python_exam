@@ -24,28 +24,28 @@ df['Platform(s)'] = df['Platform(s)'].str.split(', ')
 df = df.explode('Platform(s)')
 
 # Her inddeler vi vores data i features, hvor vi har genres og platformer
-X = df['Genre(s)']
+x = df['Genre(s)']
 y = df['Platform(s)']
 
-# Her gør vi så X altså genres kun er en feature
-X = X.values.reshape(-1, 1)
+# Vi omdanner vores genre feature fra et 1D array til et 2D array med en kolonne
+x = x.values.reshape(-1, 1)
 
 # Her fjerner vi rækkerne med en NaN value
 nan_indices = pd.isnull(y)
-X_train = X[~nan_indices]
+x_train = x[~nan_indices]
 y_train = y[~nan_indices]
 
 # Vi opdeler vores datasæt i et træningssæt og et testingsæt
-X_train, X_test, y_train, y_test = train_test_split(X_train, y_train, test_size=0.2, random_state=42)
+x_train, X_test, y_train, y_test = train_test_split(x_train, y_train, test_size=0.2, random_state=42)
 
 # Her bruger vi CountVectorizer til at konvertere vores genre data til en numerisk feature
 vectorizer = CountVectorizer()
-X_train = vectorizer.fit_transform(X_train.flatten())
+x_train = vectorizer.fit_transform(x_train.flatten())
 X_test = vectorizer.transform(X_test.flatten())
 
 # Vi bruger vores data til at træne på en logistisk regressionsmodel
 model = LogisticRegression()
-model.fit(X_train, y_train)
+model.fit(x_train, y_train)
 
 # Her prøver vi at bruge vores test data til at forudse gaming platformen
 y_pred = model.predict(X_test)
