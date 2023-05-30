@@ -36,19 +36,19 @@ x_train = x[~nan_indices]
 y_train = y[~nan_indices]
 
 # Vi opdeler vores datasæt i et træningssæt og et testingsæt
-x_train, X_test, y_train, y_test = train_test_split(x_train, y_train, test_size=0.2, random_state=42)
+x_train, x_test, y_train, y_test = train_test_split(x_train, y_train, test_size=0.2, random_state=42)
 
 # Her bruger vi CountVectorizer til at konvertere vores genre data til en numerisk feature
 vectorizer = CountVectorizer()
 x_train = vectorizer.fit_transform(x_train.flatten())
-X_test = vectorizer.transform(X_test.flatten())
+x_test = vectorizer.transform(x_test.flatten())
 
 # Vi bruger vores data til at træne på en logistisk regressionsmodel
 model = LogisticRegression()
 model.fit(x_train, y_train)
 
 # Her prøver vi at bruge vores test data til at forudse gaming platformen
-y_pred = model.predict(X_test)
+y_pred = model.predict(x_test)
 
 # Her beregner vi hvor præcis vores model er
 accuracy = accuracy_score(y_test, y_pred)
