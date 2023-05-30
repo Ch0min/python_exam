@@ -26,6 +26,7 @@ try:
     df_awards.columns = ['Title', 'Awards']
 
     game_data = pd.merge(df, df_awards, on='Title', how='left').fillna(0)
+    # fjern sidste række som kun er 0er
     game_data.drop(index=df.index[-1], axis=0, inplace=True)
 
     # onehot encode
@@ -49,9 +50,6 @@ try:
     # split data i features og target
     x = game_data.drop(columns=['Title', 'Awards'])
     y = game_data['Awards']
-
-    # columnnames
-    feature_names = x.columns
 
     # split data training og testing
     x_train, x_test, y_train, y_test = train_test_split(
