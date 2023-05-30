@@ -15,7 +15,7 @@ developer_counts = data.loc[~data['Month'].str.lower().str.contains('april'), 'D
 x = np.array([[developer_counts[developer]] for developer in developer_counts.keys()])
 y = np.array(list(developer_counts.values()))
 
-# Use cross-validation to estimate model performance
+# Vi bruger cross-validation til at få et estimat om vores model er præcis.
 model = make_pipeline(StandardScaler(), Ridge(alpha=0.1))
 scores = cross_val_score(model, x, y, cv=5, scoring='r2')
 mean_accuracy = np.mean(scores)
@@ -26,7 +26,7 @@ model.fit(x, y)
 # Lav forudsigelser for alle spiludviklere
 predictions = {developer: round(model.predict([[developer_counts[developer]]])[0]) for developer in developer_counts.keys()}
 
-# Print predictions
+# Vi printer en forudsigelse af mængden af spil fra en given udgiver.
 for developer, count in predictions.items():
     print(f"{developer} is predicted to release {count} games in April.")
 print(f"Mean Accuracy: {mean_accuracy}")
