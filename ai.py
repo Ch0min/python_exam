@@ -2,7 +2,7 @@ import pandas as pd
 import glob
 import os
 import numpy as np
-from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score
+from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
@@ -47,35 +47,35 @@ try:
     game_data = pd.concat([game_data, onehot_encoded_df], axis=1)
 
     # split data i features og target
-    X = game_data.drop(columns=['Title', 'Awards'])
+    x = game_data.drop(columns=['Title', 'Awards'])
     y = game_data['Awards']
 
     # columnnames
-    feature_names = X.columns
+    feature_names = x.columns
 
     # split data training og testing
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42)
+    x_train, x_test, y_train, y_test = train_test_split(
+        x, y, test_size=0.2, random_state=42)
 
     # skaler features for at standardisere data
     scaler = StandardScaler()
-    X_train_scaled = scaler.fit_transform(X_train)
-    X_test_scaled = scaler.transform(X_test)
+    x_train_scaled = scaler.fit_transform(x_train)
+    x_test_scaled = scaler.transform(x_test)
 
     # GridSearchCV optimal k_value
     k_values = range(1, 50)
     param_grid = {'n_neighbors': k_values}
     grid_search = GridSearchCV(
         KNeighborsRegressor(), param_grid, cv=5, n_jobs=-1)
-    grid_search.fit(X_train_scaled, y_train)
+    grid_search.fit(x_train_scaled, y_train)
 
     # brug bedste k_value
     best_k = grid_search.best_params_['n_neighbors']
     knn = KNeighborsRegressor(n_neighbors=best_k)
-    knn.fit(X_train_scaled, y_train)
+    knn.fit(x_train_scaled, y_train)
 
     # test set
-    y_pred = knn.predict(X_test_scaled)
+    y_pred = knn.predict(x_test_scaled)
 
     # evaluer model
     mse = mean_squared_error(y_test, y_pred)
